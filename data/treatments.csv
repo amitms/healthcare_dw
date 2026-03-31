@@ -1,0 +1,3 @@
+treatment_id,visit_id,treatment_type,cost
+T001,V001,Medication,150.00
+T002,V002,Consultation,200.00

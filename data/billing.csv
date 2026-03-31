@@ -1,0 +1,3 @@
+bill_id,visit_id,total_amount,insurance_provider
+B001,V001,150.00,BlueCross
+B002,V002,200.00,Aetna

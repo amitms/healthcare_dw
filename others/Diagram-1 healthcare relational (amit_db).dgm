@@ -1,0 +1,90 @@
+{
+    "connectionName": "amit_db",
+    "layout": {
+        "items": [
+            {
+                "type": "TABLE",
+                "name": "PATIENTS",
+                "schema": "AMIT",
+                "bounds": {
+                    "x": -37.087249755859375,
+                    "y": 405.5,
+                    "width": 426.9779052734375,
+                    "height": 171
+                }
+            },
+            {
+                "type": "TABLE",
+                "name": "DOCTORS",
+                "schema": "AMIT",
+                "bounds": {
+                    "x": -37.087249755859375,
+                    "y": 642,
+                    "width": 426.9779052734375,
+                    "height": 146
+                }
+            },
+            {
+                "type": "TABLE",
+                "name": "BILLING",
+                "schema": "AMIT",
+                "bounds": {
+                    "x": 612,
+                    "y": 746,
+                    "width": 443.9127502441406,
+                    "height": 198
+                }
+            },
+            {
+                "type": "TABLE",
+                "name": "TREATMENTS",
+                "schema": "AMIT",
+                "bounds": {
+                    "x": 620.4674224853516,
+                    "y": 133,
+                    "width": 426.9779052734375,
+                    "height": 198
+                }
+            },
+            {
+                "type": "TABLE",
+                "name": "VISITS",
+                "schema": "AMIT",
+                "bounds": {
+                    "x": 612,
+                    "y": 418,
+                    "width": 426.9779052734375,
+                    "height": 248
+                }
+            },
+            {
+                "type": "RELATION",
+                "name": "FK_VISIT",
+                "sourceID": "AMIT.VISITS",
+                "targetID": "AMIT.TREATMENTS",
+                "style": "dash"
+            },
+            {
+                "type": "RELATION",
+                "name": "FK_PATIENT",
+                "sourceID": "AMIT.PATIENTS",
+                "targetID": "AMIT.VISITS",
+                "style": "dash"
+            },
+            {
+                "type": "RELATION",
+                "name": "FK_DOCTOR",
+                "sourceID": "AMIT.DOCTORS",
+                "targetID": "AMIT.VISITS",
+                "style": "dash"
+            },
+            {
+                "type": "RELATION",
+                "name": "FK_VISIT_BILL",
+                "sourceID": "AMIT.VISITS",
+                "targetID": "AMIT.BILLING",
+                "style": "dash"
+            }
+        ]
+    }
+}

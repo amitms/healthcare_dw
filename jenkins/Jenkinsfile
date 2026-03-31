@@ -1,0 +1,52 @@
+pipeline {
+    agent any
+    environment {
+        ORACLE_USER = 'amit'
+        ORACLE_PASS = 'texas'
+        ORACLE_DSN  = 'localhost:1521/XEPDB1'
+    }
+    stages {
+        stage('Clone Repo') {
+            steps {
+                git 'https://github.com/your-repo/healthcare_dw.git'
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                sh '''
+                python3 -m pip install --upgrade pip
+                pip install pandas sqlalchemy cx_Oracle apache-airflow
+                '''
+            }
+        }
+
+        stage('Load Staging via Python ETL') {
+            steps {
+                sh 'python3 etl/load_staging.py'
+            }
+        }
+
+        stage('Run PL/SQL ETL Procedures') {
+            steps {
+                sh 'python3 etl/run_etl.py'
+            }
+        }
+
+        stage('Optional PL/SQL Table Creation') {
+            steps {
+                sh '''
+                sqlplus $ORACLE_USER/$ORACLE_PASS@$ORACLE_DSN @sql/01_create_oltp_tables.sql
+                sqlplus $ORACLE_USER/$ORACLE_PASS@$ORACLE_DSN @sql/02_create_staging_tables.sql
+                sqlplus $ORACLE_USER/$ORACLE_PASS@$ORACLE_DSN @sql/03_create_dimensional_tables.sql
+                '''
+            }
+        }
+
+        stage('Verify Load') {
+            steps {
+                echo 'ETL pipeline completed successfully'
+            }
+        }
+    }
+}
