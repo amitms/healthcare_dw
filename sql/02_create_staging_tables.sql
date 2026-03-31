@@ -1,4 +1,5 @@
--- Staging Tables
+-- Staging Tables auto generated from loaded from load_staging.py using pandas by default is loads as CLOB datatype
+/*
 CREATE TABLE STG_Patients (
     src_patient_id VARCHAR2(50),
     name VARCHAR2(100),
@@ -38,3 +39,4 @@ CREATE TABLE STG_Billing (
     insurance_provider VARCHAR2(100),
     load_timestamp TIMESTAMP DEFAULT SYSTIMESTAMP
 );
+*/
