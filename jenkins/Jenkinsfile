@@ -4,72 +4,69 @@ pipeline {
         ORACLE_USER = 'amit'
         ORACLE_PASS = 'texas'
         ORACLE_DSN  = 'localhost:1521/XEPDB1'
-		
-		PYTHON_EXE = 'C:\\Program Files\\Python314\\python.exe'
+        
+        PYTHON_EXE = 'C:\\Program Files\\Python314\\python.exe'
         ORACLE_INSTANT_CLIENT = 'C:\\oracle\\instantclient_23_0'
     }
     stages {
         stage('Clone Repo') {
             steps {
-				git branch: 'main', url: 'https://github.com/amitms/healthcare_dw.git'
+                git branch: 'main', url: 'https://github.com/amitms/healthcare_dw.git'
             }
-			
         }
 
         stage('Set Oracle Path') {
             steps {
                 bat """
-                REM Add Oracle Instant Client to PATH for cx_Oracle
-                set PATH=${ORACLE_INSTANT_CLIENT};%PATH%
+                REM Add Oracle Instant Client to PATH
+                set PATH=%ORACLE_INSTANT_CLIENT%;%PATH%
                 """
             }
         }
 
-        stage('Install Dependencies') {
+        stage('Install Python Dependencies') {
             steps {
                 bat """
-                REM Upgrade pip, setuptools, wheel first
-				"${PYTHON_EXE}" -m ensurepip --upgrade
-				"${PYTHON_EXE}" -m pip install --upgrade pip setuptools wheel
+                REM Upgrade pip, setuptools, wheel
+                "%PYTHON_EXE%" -m ensurepip --upgrade
+                "%PYTHON_EXE%" -m pip install --upgrade pip setuptools wheel
 
-                REM Then install other dependencies including cx_Oracle
-                "${PYTHON_EXE}" -m pip install pandas sqlalchemy cx_Oracle apache-airflow
+                REM Install other dependencies
+                "%PYTHON_EXE%" -m pip install pandas sqlalchemy cx_Oracle apache-airflow
                 """
             }
         }
 
-		stage('Check Python') {
-			steps {
-				bat """
-				"${PYTHON_EXE}" --version
-				"${PYTHON_EXE}" -m pip --version
-				"${PYTHON_EXE}" -m pip list'
-				"${PYTHON_EXE}" -c "import pkg_resources; print('pkg_resources version:', pkg_resources.__version__)"
-				"""
-			}
-		}
-		
+        stage('Check Python & pkg_resources') {
+            steps {
+                bat """
+                "%PYTHON_EXE%" --version
+                "%PYTHON_EXE%" -m pip --version
+                "%PYTHON_EXE%" -m pip list
+                "%PYTHON_EXE%" -c "import pkg_resources; print('pkg_resources version:', pkg_resources.__version__)"
+                """
+            }
+        }
+
         stage('Optional PL/SQL Table Creation') {
             steps {
-                sh '''
-                sqlplus $ORACLE_USER/$ORACLE_PASS@$ORACLE_DSN @sql/01_create_oltp_tables.sql
-                sqlplus $ORACLE_USER/$ORACLE_PASS@$ORACLE_DSN @sql/02_create_staging_tables.sql
-                sqlplus $ORACLE_USER/$ORACLE_PASS@$ORACLE_DSN @sql/03_create_dimensional_tables.sql
-                '''
+                bat """
+                sqlplus %ORACLE_USER%/%ORACLE_PASS%@%ORACLE_DSN% @sql\\01_create_oltp_tables.sql
+                sqlplus %ORACLE_USER%/%ORACLE_PASS%@%ORACLE_DSN% @sql\\02_create_staging_tables.sql
+                sqlplus %ORACLE_USER%/%ORACLE_PASS%@%ORACLE_DSN% @sql\\03_create_dimensional_tables.sql
+                """
             }
         }
 
         stage('Load Staging via Python ETL') {
             steps {
-                sh 'python3 etl/load_staging.py'
+                bat "\"%PYTHON_EXE%\" etl\\load_staging.py"
             }
         }
 
         stage('Run PL/SQL ETL Procedures') {
-			steps {
-                sh '''
-				sqlplus $ORACLE_USER/$ORACLE_PASS@$ORACLE_DSN @etl/run_etl_pipeline.sql
-                '''
+            steps {
+                bat "sqlplus %ORACLE_USER%/%ORACLE_PASS%@%ORACLE_DSN% @etl\\run_etl_pipeline.sql"
             }
         }
 
