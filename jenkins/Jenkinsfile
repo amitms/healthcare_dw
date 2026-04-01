@@ -21,6 +21,16 @@ pipeline {
             }
         }
 
+        stage('Optional PL/SQL Table Creation') {
+            steps {
+                sh '''
+                sqlplus $ORACLE_USER/$ORACLE_PASS@$ORACLE_DSN @sql/01_create_oltp_tables.sql
+                sqlplus $ORACLE_USER/$ORACLE_PASS@$ORACLE_DSN @sql/02_create_staging_tables.sql
+                sqlplus $ORACLE_USER/$ORACLE_PASS@$ORACLE_DSN @sql/03_create_dimensional_tables.sql
+                '''
+            }
+        }
+
         stage('Load Staging via Python ETL') {
             steps {
                 sh 'python3 etl/load_staging.py'
@@ -31,17 +41,6 @@ pipeline {
 			steps {
                 sh '''
 				sqlplus $ORACLE_USER/$ORACLE_PASS@$ORACLE_DSN @etl/run_etl_pipeline.sql
-                '''
-            }
-        }
-
-        stage('Optional PL/SQL Table Creation') {
-            steps {
-                sh '''
-                sqlplus $ORACLE_USER/$ORACLE_PASS@$ORACLE_DSN @sql/01_create_oltp_tables.sql
-                sqlplus $ORACLE_USER/$ORACLE_PASS@$ORACLE_DSN @sql/02_create_staging_tables.sql
-                sqlplus $ORACLE_USER/$ORACLE_PASS@$ORACLE_DSN @sql/03_create_dimensional_tables.sql
-				sqlplus $ORACLE_USER/$ORACLE_PASS@$ORACLE_DSN @sql/run_etl_pipeline.sql
                 '''
             }
         }
