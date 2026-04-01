@@ -12,12 +12,20 @@ pipeline {
             }
 			
         }
+		stage('Check Python') {
+			steps {
+				bat 'python --version'
+				bat 'python -m pip --version'
+				bat 'python -m pip list'
+			}
+		}
 
         stage('Install Dependencies') {
             steps {
                 bat '''
                 REM Upgrade pip, setuptools, wheel first
-                "C:\\Users\\amitsregular\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe" -m pip install --upgrade pip setuptools wheel
+				"C:\\Users\\amitsregular\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe" -m ensurepip --upgrade
+				"C:\\Users\\amitsregular\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe" -m pip install --upgrade pip setuptools wheel
 
                 REM Then install other dependencies including cx_Oracle
                 "C:\\Users\\amitsregular\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe" -m pip install pandas sqlalchemy cx_Oracle apache-airflow
