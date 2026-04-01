@@ -8,13 +8,14 @@ pipeline {
     stages {
         stage('Clone Repo') {
             steps {
-                git 'https://github.com/amitms/healthcare_dw.git'
+				git branch: 'main', url: 'https://github.com/amitms/healthcare_dw.git'
             }
+			
         }
 
         stage('Install Dependencies') {
             steps {
-                sh '''
+                bat '''
                 python3 -m pip install --upgrade pip
                 pip install pandas sqlalchemy cx_Oracle apache-airflow
                 '''
