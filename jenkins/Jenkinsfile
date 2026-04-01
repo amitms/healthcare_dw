@@ -59,18 +59,26 @@ pipeline {
                 bat """
                 sqlplus %ORACLE_USER%/%ORACLE_PASS%@%ORACLE_DSN% @sql\\01_create_oltp_tables.sql
                 sqlplus %ORACLE_USER%/%ORACLE_PASS%@%ORACLE_DSN% @sql\\02_create_staging_tables.sql
-                sqlplus %ORACLE_USER%/%ORACLE_PASS%@%ORACLE_DSN% @sql\\03_create_dimensional_tables.sql
+                sqlplus %ORACLE_USER%/%ORACLE_PASS%@%ORACLE_DSN% @sql\\04_create_dimensional_tables.sql
                 """
             }
         }
-
+		
         stage('Load Staging via Python ETL') {
             steps {
                 bat "\"%PYTHON_EXE%\" scripts\\load_staging.py"
             }
         }
 
-        stage('Run PL/SQL ETL Procedures') {
+        stage('Transformation') {
+            steps {
+                bat """
+                sqlplus %ORACLE_USER%/%ORACLE_PASS%@%ORACLE_DSN% @sql\\03_transfrom_tables.sql              
+                """
+            }
+        }
+
+        stage('DW loading') {
             steps {
                 bat "sqlplus %ORACLE_USER%/%ORACLE_PASS%@%ORACLE_DSN% @etl\\run_etl_pipeline.sql"
             }
