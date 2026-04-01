@@ -61,7 +61,7 @@ pipeline {
 
         stage('Load Staging via Python ETL') {
             steps {
-                bat "\"%PYTHON_EXE%\" etl\\load_staging.py"
+                bat "\"%PYTHON_EXE%\" scripts\\load_staging.py"
             }
         }
 
