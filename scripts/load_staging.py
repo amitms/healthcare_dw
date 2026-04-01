@@ -1,11 +1,9 @@
 import pandas as pd
 from sqlalchemy import create_engine
-from sqlalchemy import types
-from sqlalchemy import Float
 #from sqlalchemy.dialects import oracle
 from decimal import Decimal
 import oracledb
-oracledb.init_oracle_client(lib_dir=None)  # None → thin mode
+#oracledb.init_oracle_client(lib_dir=None)  # None → thin mode
 
 # --- Configuration ---
 DB_USER = 'amit'
