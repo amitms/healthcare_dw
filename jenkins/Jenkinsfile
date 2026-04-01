@@ -30,7 +30,7 @@ pipeline {
         stage('Run PL/SQL ETL Procedures') {
 			steps {
                 sh '''
-				sqlplus $ORACLE_USER/$ORACLE_PASS@$ORACLE_DSN @sql/run_etl_pipeline.sql
+				sqlplus $ORACLE_USER/$ORACLE_PASS@$ORACLE_DSN @etl/run_etl_pipeline.sql
                 '''
             }
         }
