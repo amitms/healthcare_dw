@@ -44,7 +44,7 @@ pipeline {
                 "%PYTHON_EXE%" --version
                 "%PYTHON_EXE%" -m pip --version
                 "%PYTHON_EXE%" -m pip list
-                "%PYTHON_EXE%" -c "import pkg_resources; print('pkg_resources version:', pkg_resources.__version__)"
+                REM "%PYTHON_EXE%" -c "import pkg_resources; print('pkg_resources version:', pkg_resources.__version__)"
                 """
             }
         }
