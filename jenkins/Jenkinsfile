@@ -32,7 +32,8 @@ pipeline {
                 "%PYTHON_EXE%" -m pip install --upgrade pip setuptools wheel
 
                 REM Install other dependencies
-				"%PYTHON_EXE%" -m pip install --no-build-isolation cx_Oracle oracledb
+				"%PYTHON_EXE%" -m pip install oracledb
+				"%PYTHON_EXE%" -m pip install --no-build-isolation cx_Oracle
                 "%PYTHON_EXE%" -m pip install pandas sqlalchemy apache-airflow
                 """
             }
