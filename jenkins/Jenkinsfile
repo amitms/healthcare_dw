@@ -4,6 +4,9 @@ pipeline {
         ORACLE_USER = 'amit'
         ORACLE_PASS = 'texas'
         ORACLE_DSN  = 'localhost:1521/XEPDB1'
+		
+		PYTHON_EXE = 'C:\\Program Files\\Python314\\python.exe'
+        ORACLE_INSTANT_CLIENT = 'C:\\oracle\\instantclient_23_0'
     }
     stages {
         stage('Clone Repo') {
@@ -12,26 +15,39 @@ pipeline {
             }
 			
         }
-		stage('Check Python') {
-			steps {
-				bat 'python --version'
-				bat 'python -m pip --version'
-				bat 'python -m pip list'
-			}
-		}
+
+        stage('Set Oracle Path') {
+            steps {
+                bat """
+                REM Add Oracle Instant Client to PATH for cx_Oracle
+                set PATH=${ORACLE_INSTANT_CLIENT};%PATH%
+                """
+            }
+        }
 
         stage('Install Dependencies') {
             steps {
                 bat '''
                 REM Upgrade pip, setuptools, wheel first
-				"C:\\Program Files\\Python314\\python.exe" -m ensurepip --upgrade
-				"C:\\Program Files\\Python314\\python.exe" -m pip install --upgrade pip setuptools wheel
+				"${PYTHON_EXE}" -m ensurepip --upgrade
+				"${PYTHON_EXE}" -m pip install --upgrade pip setuptools wheel
 
                 REM Then install other dependencies including cx_Oracle
-                "C:\\Program Files\\Python314\\python.exe" -m pip install pandas sqlalchemy cx_Oracle apache-airflow
+                "${PYTHON_EXE}" -m pip install pandas sqlalchemy cx_Oracle apache-airflow
                 '''
             }
         }
+
+		stage('Check Python') {
+			steps {
+				bat """
+				"${PYTHON_EXE}" --version
+				"${PYTHON_EXE}" -m pip --version
+				"${PYTHON_EXE}" -m pip list'
+				"${PYTHON_EXE}" -c "import pkg_resources; print('pkg_resources version:', pkg_resources.__version__)"
+				"""
+			}
+		}
 		
         stage('Optional PL/SQL Table Creation') {
             steps {
