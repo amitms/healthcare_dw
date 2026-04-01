@@ -16,12 +16,15 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 bat '''
-                python3 -m pip install --upgrade pip
-                pip install pandas sqlalchemy cx_Oracle apache-airflow
+                REM Upgrade pip, setuptools, wheel first
+                python -m pip install --upgrade pip setuptools wheel
+
+                REM Then install other dependencies including cx_Oracle
+                python -m pip install pandas sqlalchemy cx_Oracle apache-airflow
                 '''
             }
         }
-
+		
         stage('Optional PL/SQL Table Creation') {
             steps {
                 sh '''
