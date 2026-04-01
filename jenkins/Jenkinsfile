@@ -28,8 +28,10 @@ pipeline {
         }
 
         stage('Run PL/SQL ETL Procedures') {
-            steps {
-                sh 'python3 etl/run_etl.py'
+			steps {
+                sh '''
+				sqlplus $ORACLE_USER/$ORACLE_PASS@$ORACLE_DSN @sql/run_etl_pipeline.sql
+                '''
             }
         }
 
@@ -39,6 +41,7 @@ pipeline {
                 sqlplus $ORACLE_USER/$ORACLE_PASS@$ORACLE_DSN @sql/01_create_oltp_tables.sql
                 sqlplus $ORACLE_USER/$ORACLE_PASS@$ORACLE_DSN @sql/02_create_staging_tables.sql
                 sqlplus $ORACLE_USER/$ORACLE_PASS@$ORACLE_DSN @sql/03_create_dimensional_tables.sql
+				sqlplus $ORACLE_USER/$ORACLE_PASS@$ORACLE_DSN @sql/run_etl_pipeline.sql
                 '''
             }
         }
