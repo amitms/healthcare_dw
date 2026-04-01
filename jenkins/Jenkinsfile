@@ -48,6 +48,7 @@ pipeline {
                 "%PYTHON_EXE%" -m pip list
                 REM "%PYTHON_EXE%" -c "import pkg_resources; print('pkg_resources version:', pkg_resources.__version__)"
 				"%PYTHON_EXE%" -c "import oracledb; print('oracledb version:', oracledb.__version__)"
+				"%PYTHON_EXE%" -c "import sqlalchemy; print('sqlalchemy version:', sqlalchemy.__version__)"
                 """
             }
         }
