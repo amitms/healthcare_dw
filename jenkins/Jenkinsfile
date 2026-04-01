@@ -17,10 +17,10 @@ pipeline {
             steps {
                 bat '''
                 REM Upgrade pip, setuptools, wheel first
-                python -m pip install --upgrade pip setuptools wheel
+                "C:\\Users\\amitsregular\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe" -m pip install --upgrade pip setuptools wheel
 
                 REM Then install other dependencies including cx_Oracle
-                python -m pip install pandas sqlalchemy cx_Oracle apache-airflow
+                "C:\\Users\\amitsregular\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe" -m pip install pandas sqlalchemy cx_Oracle apache-airflow
                 '''
             }
         }
