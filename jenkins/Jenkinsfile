@@ -27,14 +27,14 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                bat '''
+                bat """
                 REM Upgrade pip, setuptools, wheel first
 				"${PYTHON_EXE}" -m ensurepip --upgrade
 				"${PYTHON_EXE}" -m pip install --upgrade pip setuptools wheel
 
                 REM Then install other dependencies including cx_Oracle
                 "${PYTHON_EXE}" -m pip install pandas sqlalchemy cx_Oracle apache-airflow
-                '''
+                """
             }
         }
 
