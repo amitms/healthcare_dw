@@ -22,7 +22,7 @@ def load_staging(csv_file, table_name):
     for col in ['cost', 'total_amount']:
         if col in df.columns:
             df[col] = df[col].apply(lambda x: Decimal(str(x)))
-    df.to_sql(table_name, engine, if_exists='replace', index=False)
+    df.to_sql(table_name, engine, if_exists='append', index=False)
     print(f"Loaded {len(df)} rows into {table_name}")
 
 def main():
