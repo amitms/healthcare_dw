@@ -2,7 +2,7 @@ import pandas as pd
 from sqlalchemy import create_engine
 from sqlalchemy import types
 from sqlalchemy import Float
-from sqlalchemy.dialects import oracle
+#from sqlalchemy.dialects import oracle
 from decimal import Decimal
 # --- Configuration ---
 DB_USER = 'amit'
@@ -10,8 +10,8 @@ DB_PASS = 'texas'
 DB_HOST = 'localhost'
 DB_PORT = '1521'
 DB_SERVICE = 'XEPDB1'
-# CONN_STR = f'oracle+cx_oracle://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_SERVICE}'
-CONN_STR = f'oracle+oracledb://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/?service_name={DB_SERVICE}'
+CONN_STR = f'oracle+cx_oracle://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/?service_name={DB_SERVICE}'
+#CONN_STR = f'oracle+oracledb://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/?service_name={DB_SERVICE}'
 engine = create_engine(CONN_STR)
 TARGET_SCHEMA = 'amit' 
 # --- Load CSV into staging tables ---
