@@ -1,0 +1,8 @@
+database:
+  db_type: oracle
+  db_host: localhost
+  db_port: 1521
+  db_service: XEPDB1
+  target_schema: amit
+  db_user: amit
+  db_pass: texas
