@@ -4,17 +4,9 @@ from sqlalchemy import create_engine
 from decimal import Decimal
 import oracledb
 #oracledb.init_oracle_client(lib_dir=None)  # None → thin mode
+from db_connector import db_connector
 
-# --- Configuration ---
-DB_USER = 'amit'
-DB_PASS = 'texas'
-DB_HOST = 'localhost'
-DB_PORT = '1521'
-DB_SERVICE = 'XEPDB1'
-#CONN_STR = f'oracle+cx_oracle://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/?service_name={DB_SERVICE}'
-CONN_STR = f'oracle+oracledb://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/?service_name={DB_SERVICE}'
-engine = create_engine(CONN_STR)
-TARGET_SCHEMA = 'amit' 
+engine = db_connector()
 # --- Load CSV into staging tables ---
 def load_staging(csv_file, table_name):
     df = pd.read_csv(csv_file)
