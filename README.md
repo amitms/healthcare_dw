@@ -6,3 +6,21 @@ ER diagram
 jenkins pipeline
 <img width="947" height="470" alt="jenkins_pipeline" src="https://github.com/user-attachments/assets/79eabbe0-960a-427a-9643-9cc6c113ff40" />
 
+raw tables
+<img width="605" height="375" alt="image" src="https://github.com/user-attachments/assets/3f2ae781-c332-4855-ac5a-558b19e421b5" />
+
+transformed tables
+<img width="654" height="338" alt="image" src="https://github.com/user-attachments/assets/7f2ce02e-bf16-4c9c-aade-24dc15e60ee1" />
+
+Warehouse tables Dim and Fact tables:
+<img width="582" height="332" alt="image" src="https://github.com/user-attachments/assets/e33ba304-c0e1-4ee8-a2ab-b26fa1f255c7" />
+
+fact table
+<img width="784" height="155" alt="image" src="https://github.com/user-attachments/assets/282955f9-9e66-4ea3-a8a9-0417235d3026" />
+
+powerbi model view:
+<img width="1899" height="963" alt="image" src="https://github.com/user-attachments/assets/20acdb56-719f-421b-9230-19ba7c734e6f" />
+
+PowerBi Dashboard:
+<img width="1913" height="849" alt="PoweBi_Dashboard_sample" src="https://github.com/user-attachments/assets/9fdbb4d2-8922-4700-b9ab-5bc79693e18b" />
+
