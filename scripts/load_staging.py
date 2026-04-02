@@ -1,10 +1,11 @@
 import pandas as pd
-from sqlalchemy import create_engine
-#from sqlalchemy.dialects import oracle
 from decimal import Decimal
-import oracledb
-#oracledb.init_oracle_client(lib_dir=None)  # None → thin mode
 from db_connector import db_connector
+
+# from sqlalchemy import create_engine
+#from sqlalchemy.dialects import oracle
+# import oracledb
+#oracledb.init_oracle_client(lib_dir=None)  # None → thin mode
 
 engine = db_connector()
 # --- Load CSV into staging tables ---

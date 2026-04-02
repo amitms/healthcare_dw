@@ -29,7 +29,7 @@ BEGIN
     INSERT INTO BILLING (bill_id,visit_id, total_amount, insurance_provider)
     SELECT bill_id, visit_id, to_number(total_amount), insurance_provider 
     FROM STG_Billing;
-END;
 commit;
 EXCEPTION WHEN OTHERS THEN ROLLBACK;
+END;
 /   

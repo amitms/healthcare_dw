@@ -22,7 +22,7 @@ BEGIN
     JOIN Dim_Doctor dd ON dd.doctor_id = sv.doctor_id
     JOIN Dim_Date dt ON dt.the_date = sv.visit_date
     GROUP BY dp.patient_key, dd.doctor_key, dt.date_key;
-END;
 commit;
 EXCEPTION WHEN OTHERS THEN ROLLBACK;
+END;
 /
