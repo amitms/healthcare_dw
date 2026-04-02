@@ -1,13 +1,13 @@
 BEGIN
      -- transform Patient
-    INSERT INTO PATIENTs(patient_id,name,dob,age,gender)
+    INSERT INTO PATIENTS(patient_id,name,dob,age,gender)
     SELECT
         SUBSTR(patient_id, 1, 10)                            AS patient_id,
         SUBSTR(NAME, 1, 100)                                 AS NAME,
         TO_DATE(DOB, 'YYYY-MM-DD')                           AS DOB,
         TRUNC(MONTHS_BETWEEN(SYSDATE, TO_DATE(DOB, 'YYYY-MM-DD')) / 12) AS AGE,
         SUBSTR(GENDER, 1, 10)                                AS GENDER
-    FROM STG_PATIENTs
+    FROM STG_PATIENTS
     WHERE PATIENT_ID IS NOT NULL AND DOB IS NOT NULL
     AND REGEXP_LIKE(DOB, '^\d{4}-\d{2}-\d{2}$');
 
@@ -32,4 +32,4 @@ BEGIN
 commit;
 EXCEPTION WHEN OTHERS THEN ROLLBACK;
 END;
-/   
+/
